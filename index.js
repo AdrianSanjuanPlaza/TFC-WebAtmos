@@ -17,8 +17,9 @@ const errorHandlerMW = require("./middlewares/errorHandler.mw")
 const mongodbConfig = require("./utils/mongodb.config")
 const AppError = require("./utils/AppError")
 const logger = require("./utils/logger")
-
-//faltan
+const usersRoutes = require("./routes/users.routes")
+const productsRoutes = require("./routes/products.routes")
+const requestsRoutes = require("./routes/requests.routes")
 
 // ********** CONFIGURACIONES DEL SERVIDOR **********
 
@@ -61,13 +62,16 @@ app.use(session({
     saveUninitialized:false,//No se guardará en el store hasta que no se inicialice de alguna forma
     cookie:{
         secure:false,//la sesión se enviará sólo en HTTPS (si está a true)
-        maxAge: 24 * 60 * 60 * 1000, // 24 horas en lugar de 1 hora
+        maxAge: 24 * 60 * 60 * 1000, // 24 horas
         sameSite:"none" //Permite envío de cookies en solicitudes entre diferentes dominios (CORS habilitado), pero requiere secure:true
     }    
 }))
 
 // ********** RUTAS DEL SERVIDOR **********
-
+//descomentar cuando estén hechas las rutas
+// app.use(`/api/${process.env.API}/users`,usersRoutes)
+// app.use(`/api/${process.env.API}/products`,productsRoutes)
+// app.use(`/api/${process.env.API}/requests`,requestsRoutes)
 
 
 //Middleware propio para las rutas no existentes
@@ -81,7 +85,9 @@ app.use(errorHandlerMW.errorHandler)
 
 //levantar servidor
 app.listen(port, async()=>{
-    
+
+    console.log(`${process.env.MENSAJE} http://localhost:${port}`) // ------------ modificar
+    logger.access.info(`${process.env.MENSAJE} http://localhost:${port}/api/${process.env.API}`) // ------------ modificar
     try {
         //Una vez levantado el servidor, intentamos conectar con MongoDB
         await mongodbConfig.conectarMongoDB()

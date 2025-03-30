@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    birthday:{
+        type:String,
+        required:true
+    },
     phone:{
         type:Number,
         required:true,
@@ -87,4 +91,4 @@ user.deleteUserById = async(id, result) => {
     })
 }
 
-module.exports = company
+module.exports = user

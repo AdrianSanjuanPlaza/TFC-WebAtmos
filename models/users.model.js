@@ -33,6 +33,18 @@ const userSchema = new mongoose.Schema({
     isActive:{
         type:Boolean,
         required:true
+    },
+    profile:{
+        type: String,
+        required:true
+    },
+    createdDate:{
+        type: String,
+        required:true
+    },
+    modifiedDate:{
+        type:String,
+        required:true
     }
 })
 

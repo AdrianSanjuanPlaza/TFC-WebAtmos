@@ -61,7 +61,7 @@ product.findById = async(id, result) => {
     }
 }
 
-product.updateUserById = async(id, userData, result) => {
+product.updateProductById = async(id, userData, result) => {
     await product.findByIdAndUpdate(id, productData, {runValidators:true, new:true})
     .then((datosResult) => {
         result(null, datosResult)
@@ -71,7 +71,7 @@ product.updateUserById = async(id, userData, result) => {
     })
 }
 
-product.deleteUserById = async(id, result) => {
+product.deleteProductById = async(id, result) => {
     await product.findByIdAndDelete(id)
     .then((datos) => {
         result(null, datos)

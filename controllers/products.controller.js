@@ -2,7 +2,7 @@ require("dotenv").config()
 const productModel = require("../models/products.model")
 const { wrapAsync } = require("../utils/functions")
 const AppError = require("../utils/AppError")
-
+const fecha = require("../fecha")
 
 //Obtener todos los productos
 exports.findAllProducts = wrapAsync(async(req, res) => {
@@ -39,7 +39,7 @@ exports.editProductById = wrapAsync(async(req, res) => {//Función que edita la 
         description: description,
         img: img,
         price: price,
-        modifiedDate: new Date()
+        modifiedDate: fecha.getFecha()
     }
     await productModel.updateProductById(id, newProduct, function(err,datosActualizados){//Llama al método del modelo para actualizar la compañia por id
         if(err){//Si hay error

@@ -33,19 +33,15 @@ exports.findProductById = wrapAsync(async(req, res) => {//Función que muestra l
 //Editar producto
 exports.editProductById = wrapAsync(async(req, res) => {//Función que edita la compañia
     const { id } = req.params
-    const { name, type, city, address, area, postalCode, phone, email, modifiedDate } = req.body
-    const companyActualizado = {
+    const { name, description, img, price } = req.body
+    const newProduct = {
         name: name,
-        type: type,
-        city: city,
-        address: address,
-        area: area,
-        postalCode: postalCode,
-        phone: phone,
-        email: email,
+        description: description,
+        img: img,
+        price: price,
         modifiedDate: new Date()
     }
-    await companyModel.updateCompanyById(id, companyActualizado, function(err,datosActualizados){//Llama al método del modelo para actualizar la compañia por id
+    await productModel.updateProductById(id, newProduct, function(err,datosActualizados){//Llama al método del modelo para actualizar la compañia por id
         if(err){//Si hay error
             next(new AppError(err, 400))//pasa un json con el error con el codigo 400
         }else{//Si no hay error

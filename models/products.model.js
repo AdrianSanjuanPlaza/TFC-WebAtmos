@@ -26,11 +26,11 @@ const productSchema = new mongoose.Schema({
     }
 })
 
-const product = mongoose.model("product", productSchema)
+const products = mongoose.model("products", productSchema)
 
 //crear producto
-product.createUser = async(productData, result) => {
-    const newProduct = new product(productData)
+products.createProduct = async(productData, result) => {
+    const newProduct = new products(productData)
     await newProduct.save()
     .then((data) => {
         result(null, datos)
@@ -41,9 +41,9 @@ product.createUser = async(productData, result) => {
 }
 
 //listar todos los productos
-product.findAll = async(filter={}, result) => {
-    const datos = await product.find(filter)
-    if(datos && datos.lenght > 0){
+products.findAll = async(filter={}, result) => {
+    const datos = await products.find(filter)
+    if(datos && datos.length > 0){
         result(null, datos)
     }else{
         result({"error":"No hay datos de productos"}, null)
@@ -51,8 +51,8 @@ product.findAll = async(filter={}, result) => {
 }
 
 //listar un producto por su id
-product.findById = async(id, result) => {
-    const datos = await product.findById(id)
+products.findProductById = async(id, result) => {
+    const datos = await products.findById(id)
     if(datos){
         result(null, datos)
     }else{
@@ -60,8 +60,8 @@ product.findById = async(id, result) => {
     }
 }
 
-product.updateProductById = async(id, userData, result) => {
-    await product.findByIdAndUpdate(id, productData, {runValidators:true, new:true})
+products.updateProductById = async(id, userData, result) => {
+    await products.findByIdAndUpdate(id, productData, {runValidators:true, new:true})
     .then((datosResult) => {
         result(null, datosResult)
     })
@@ -70,8 +70,8 @@ product.updateProductById = async(id, userData, result) => {
     })
 }
 
-product.deleteProductById = async(id, result) => {
-    await product.findByIdAndDelete(id)
+products.deleteProductById = async(id, result) => {
+    await products.findByIdAndDelete(id)
     .then((datos) => {
         result(null, datos)
     })
@@ -80,4 +80,4 @@ product.deleteProductById = async(id, result) => {
     })
 }
 
-module.exports = product
+module.exports = products

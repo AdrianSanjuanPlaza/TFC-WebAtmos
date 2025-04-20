@@ -2,15 +2,15 @@ require("dotenv").config()
 const productModel = require("../models/products.model")
 const { wrapAsync } = require("../utils/functions")
 const AppError = require("../utils/AppError")
-const fecha = require("../fecha")
+const fecha = require("../utils/fecha")
 
 //Obtener todos los productos
-exports.findAllProducts = wrapAsync(async(req, res) => {
-    await companyModel.findAll({}, function(err, productsData){
+exports.findAllProducts = wrapAsync(async(req, res, next) => {
+    await productModel.findAll({}, function(err, productsData){
         if(err){
-            next(new AppError(err, 404))
+            next(new AppError(err, 400))
         }else{
-            res.status(200).json({empresas:productsData})
+            res.status(200).json({products:productsData})
         }
     })
 })
@@ -20,7 +20,7 @@ exports.findAllProducts = wrapAsync(async(req, res) => {
 exports.findProductById = wrapAsync(async(req, res) => {//Función que muestra las compañias por id
     const {id} = req.params
 
-    await productModel.findById(id, function(err, productData){
+    await productModel.findProductById(id, function(err, productData){
         if(err){//Si hay error
             next(new AppError(err, 400))
         }else{

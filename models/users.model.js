@@ -32,7 +32,8 @@ const userSchema = new mongoose.Schema({
     },
     isActive:{
         type:Boolean,
-        required:true
+        required:true,
+        default:true
     },
     profile:{
         type: String,
@@ -66,7 +67,7 @@ user.createUser = async(userData, result) => {
 //listar todos los usuarios
 user.findAll = async(filter={}, result) => {
     const datos = await user.find(filter)
-    if(datos && datos.lenght > 0){
+    if(datos){
         result(null, datos)
     }else{
         result({"error":"No hay datos de usuarios"}, null)
@@ -74,7 +75,7 @@ user.findAll = async(filter={}, result) => {
 }
 
 //listar un usuario por su id
-user.findById = async(id, result) => {
+user.findUserById = async(id, result) => {
     const datos = await user.findById(id)
     if(datos){
         result(null, datos)
@@ -101,6 +102,16 @@ user.deleteUserById = async(id, result) => {
     .catch((err) => {
         result(err, null)
     })
+}
+
+//listar un usuario por su nombre
+user.findByUsername = async(filter, result) => {
+    const datos = await user.findOne({name : filter})
+    if(datos){
+        result(null, datos)
+    }else{
+        result({"error":"No hay datos"}, null)
+    }
 }
 
 module.exports = user

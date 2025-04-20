@@ -21,6 +21,7 @@ const exec = async() => {
             email: "sanjuanplazaadrian@gmail.com",
             password: "$2a$12$RVcQSOJkNfLDwlXk79tguu5A22cs4NabdKCnG85HNk2HrSAuFbqxK",
             isActive: true,
+            profile: "ADMIN",
             createdDate: fecha.getFecha(),
             modifiedDate: fecha.getFecha()
         },
@@ -32,6 +33,7 @@ const exec = async() => {
             email: "fernandoyla33@gmail.com",
             password: "$2a$12$RVcQSOJkNfLDwlXk79tguu5A22cs4NabdKCnG85HNk2HrSAuFbqxK",
             isActive: true,
+            profile: "USER",
             createdDate: fecha.getFecha(),
             modifiedDate: fecha.getFecha()
         },
@@ -43,6 +45,7 @@ const exec = async() => {
             email: "laichzeit@gmail.com",
             password: "$2a$12$RVcQSOJkNfLDwlXk79tguu5A22cs4NabdKCnG85HNk2HrSAuFbqxK",
             isActive: true,
+            profile: "USER",
             createdDate: fecha.getFecha(),
             modifiedDate: fecha.getFecha()
         },

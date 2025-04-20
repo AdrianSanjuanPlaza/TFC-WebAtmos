@@ -3,8 +3,8 @@ const bcrypt = require("../utils/bcrypt")
 const userModel = require("../models/users.model")
 const { wrapAsync } = require("../utils/functions")
 const AppError = require("../utils/AppError")
-const jwtMW = require("../middleware/jwt.mw")
-const fecha = require("../fecha")
+const jwtMW = require("../middlewares/jwt.mw")
+const fecha = require("../utils/fecha")
 
 //función de validación de contraseña
 function validarContrasena(password) {
@@ -14,7 +14,8 @@ function validarContrasena(password) {
 
 //Listar todos los usuarios
 exports.findAllUsers = wrapAsync(async function(req,res, next) {//Función para mostrar todos los usuarios
-    await userModel.findAll(function(err,datosUsers){//Llama al método del modelo para encontrar todos los usuarios
+
+    await userModel.findAll({}, function(err,datosUsers){//Llama al método del modelo para encontrar todos los usuarios
         if(err){//Si hay error
             next(new AppError(err, 400))
         }else{//Si no hay error
@@ -26,7 +27,7 @@ exports.findAllUsers = wrapAsync(async function(req,res, next) {//Función para 
 //Listar un usuario por su id
 exports.findUserById = wrapAsync(async function(req,res, next){//Función para mostrar los usuarios por id
     const {id} = req.params
-    await userModel.findById(id,function(err,datosUsuario){//Llama al método del modelo para encontrar los usuarios por id
+    await userModel.findUserById(id,function(err,datosUsuario){//Llama al método del modelo para encontrar los usuarios por id
         if(err){//Si hay error
             next(new AppError(err, 400))
         }else{//Si no hay error
@@ -70,6 +71,7 @@ exports.createUser = wrapAsync(async function(req,res, next){//Función para cre
 //Actualizar usuario
 exports.updateUser = wrapAsync(async function(req,res, next){//Función para actualizar el usuario
     const {id} = req.params
+    const userData = req.body
     const updateUser = {
         name: userData.name,
         surname: userData.surname,
@@ -103,7 +105,7 @@ exports.deleteUserById = wrapAsync(async function(req,res, next){//Función para
 })
 
 //Logout
-exports.logout = (req,res,next)=>{
+exports.logoutCSR = (req,res,next)=>{
     const jwtDestroyed = jwtMW.destroyJWT(req);
   
     if (jwtDestroyed) {
@@ -111,8 +113,7 @@ exports.logout = (req,res,next)=>{
         if (err) {
           return next(new AppError('Error al destruir la sesión', 500));
         }
-        res.redirect(`/api/${process.env.API}/users/SSR/login`)
-        // res.status(200).json({ msg: 'Token eliminado y sesión destruida' });
+        res.status(200).json({ msg: 'Token eliminado y sesión destruida' });
       })
 
     } else {
@@ -123,14 +124,14 @@ exports.logout = (req,res,next)=>{
 //login
 exports.login = wrapAsync(async (req, res, next) => {
     try {
-        const { username, password } = req.body;
+        const { name, password } = req.body;
 
         // Verifica que los datos sean proporcionados
-        if (!username || !password) {
+        if (!name || !password) {
             return next(new AppError("Usuario y contraseña son requeridos", 400)); // Agrega return para detener la ejecución
         }
 
-        await userModel.findByUsername(username, async function (err, userFound) {
+        await userModel.findByUsername(name, async function (err, userFound) {
             if (err) {
                 return next(new AppError(err, 400)); // Detenemos la ejecución en caso de error
             }
@@ -138,6 +139,8 @@ exports.login = wrapAsync(async (req, res, next) => {
             if (!userFound) {
                 return next(new AppError("Usuario y/o contraseña incorrectos", 401)); // Detenemos si no se encuentra el usuario
             }
+
+            console.log(userFound)
 
             if (!userFound.password) {
                 return next(new AppError("Error en los datos del usuario", 500)); // Si no hay contraseña

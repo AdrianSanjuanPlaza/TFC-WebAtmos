@@ -24,7 +24,7 @@ exports.findAllUsers = wrapAsync(async function(req,res, next) {//Función para 
 })
 
 //Listar un usuario por su id
-exports.findUserByIdJSON = wrapAsync(async function(req,res, next){//Función para mostrar los usuarios por id
+exports.findUserById = wrapAsync(async function(req,res, next){//Función para mostrar los usuarios por id
     const {id} = req.params
     await userModel.findById(id,function(err,datosUsuario){//Llama al método del modelo para encontrar los usuarios por id
         if(err){//Si hay error

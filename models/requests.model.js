@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const fecha = require("../utils/fecha")
 
 const requestSchema = new mongoose.Schema({
     userId:{
@@ -14,23 +15,26 @@ const requestSchema = new mongoose.Schema({
         required:false
     },
     state:{
-        type:Boolean,
-        required:true
+        type:String,
+        required:true,
+        default: "pendiente"
     },
     createdDate:{
         type: String,
-        required: true
+        required: true,
+        default: fecha.getFecha()
     },
     modifiedDate:{
         type: String,
-        required: true
+        required: true,
+        default: fecha.getFecha()
     }
 })
 
 const request = mongoose.model("request", requestSchema)
 
 request.createRequest = async(requestData, result) => {// Método para crear solicitud
-    const newRequest = new Inscription(inscriptionData)// Crea nueva instancia
+    const newRequest = new request(requestData)// Crea nueva instancia
     await newRequest.save()// Guarda en base de datos
     .then((datos) => {
         result(null, datos)// Retorna datos si hay éxito

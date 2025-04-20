@@ -5,7 +5,7 @@ const AppError = require("../utils/AppError")
 const fecha = require("../utils/fecha")
 
 //Crear
-exports.createRequestCSR = wrapAsync(async (req, res, next) => {
+exports.createRequest = wrapAsync(async (req, res, next) => {
     await requestModel.createRequest(req.body, function (err, requestCreated) {
         if (err) {
             next(new AppError(err, 400));
@@ -16,7 +16,7 @@ exports.createRequestCSR = wrapAsync(async (req, res, next) => {
 });
 
 //Find all
-exports.findAllRequestCSR = wrapAsync(async (req, res, next) => {
+exports.findAllRequest = wrapAsync(async (req, res, next) => {
     await requestModel.findAllRequests(function (err, datosRequest) {
         if (err) {
             next(new AppError(err, 500))
@@ -41,13 +41,10 @@ exports.findRequestById = wrapAsync(async function(req,res, next){//Función par
 //Edit by id
 exports.editRequestUser = wrapAsync(async (req, res, next) => {
     const { id } = req.params;
-    const { productId, descripcion } = req.body;
+    const { productId, description } = req.body;
     const requestActualizado = {
-        userId,
         productId: productId,
-        descripcion: descripcion,
-        state,
-        createdDate,
+        description: description,
         modifiedDate: fecha.getFecha()
     };
     await requestModel.updateRequestById(id, requestActualizado, function (err, datosActualizados) {
@@ -77,11 +74,7 @@ exports.changeRequestState = wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     const { state } = req.body;
     const requestActualizado = {
-        userId,
-        productId,
-        descripcion,
         state: state,
-        createdDate,
         modifiedDate: fecha.getFecha()
     }
     await requestModel.updateRequestById(id, requestActualizado, function (err, datosActualizados) {

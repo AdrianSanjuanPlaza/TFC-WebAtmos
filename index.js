@@ -68,10 +68,9 @@ app.use(session({
 }))
 
 // ********** RUTAS DEL SERVIDOR **********
-//descomentar cuando estén hechas las rutas
-// app.use(`/api/${process.env.API}/users`,usersRoutes)
-// app.use(`/api/${process.env.API}/products`,productsRoutes)
-// app.use(`/api/${process.env.API}/requests`,requestsRoutes)
+app.use(`/api/${process.env.API}/users`,usersRoutes)
+app.use(`/api/${process.env.API}/products`,productsRoutes)
+app.use(`/api/${process.env.API}/requests`,requestsRoutes)
 
 
 //Middleware propio para las rutas no existentes
@@ -86,7 +85,7 @@ app.use(errorHandlerMW.errorHandler)
 //levantar servidor
 app.listen(port, async()=>{
 
-    console.log(`${process.env.MENSAJE} http://localhost:${port}`) // ------------ modificar
+    console.log(`${process.env.MENSAJE} http://localhost:${port}/api/${process.env.api}`) // ------------ modificar
     logger.access.info(`${process.env.MENSAJE} http://localhost:${port}/api/${process.env.API}`) // ------------ modificar
     try {
         //Una vez levantado el servidor, intentamos conectar con MongoDB

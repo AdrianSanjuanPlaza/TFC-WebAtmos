@@ -1,5 +1,6 @@
 const userModel = require("../../models/users.model")
 const mongodbConfig = require("../mongodb.config")
+const fecha = require("../fecha")
 
 const exec = async() => {
     await mongodbConfig.conectarMongoDB()
@@ -19,7 +20,9 @@ const exec = async() => {
             phone: 666666666,
             email: "sanjuanplazaadrian@gmail.com",
             password: "$2a$12$RVcQSOJkNfLDwlXk79tguu5A22cs4NabdKCnG85HNk2HrSAuFbqxK",
-            isActive: true
+            isActive: true,
+            createdDate: fecha.getFecha(),
+            modifiedDate: fecha.getFecha()
         },
         {
             name: "Fernando",
@@ -28,7 +31,9 @@ const exec = async() => {
             phone: 333333333,
             email: "fernandoyla33@gmail.com",
             password: "$2a$12$RVcQSOJkNfLDwlXk79tguu5A22cs4NabdKCnG85HNk2HrSAuFbqxK",
-            isActive: true
+            isActive: true,
+            createdDate: fecha.getFecha(),
+            modifiedDate: fecha.getFecha()
         },
         {
             name: "Till",
@@ -37,7 +42,9 @@ const exec = async() => {
             phone: 777777777,
             email: "laichzeit@gmail.com",
             password: "$2a$12$RVcQSOJkNfLDwlXk79tguu5A22cs4NabdKCnG85HNk2HrSAuFbqxK",
-            isActive: true
+            isActive: true,
+            createdDate: fecha.getFecha(),
+            modifiedDate: fecha.getFecha()
         },
     ]
 

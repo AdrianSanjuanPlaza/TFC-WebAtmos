@@ -50,6 +50,7 @@ exports.createUser = wrapAsync(async function(req,res, next){//Función para cre
             email: userData.email,
             password: userData.password,
             img: userData.img || null,
+            isActive: true,
             profile: userData.profile || 'USER',
             createdDate: fecha.getFecha(),
             modifiedDate: fecha.getFecha()
@@ -75,10 +76,8 @@ exports.updateUser = wrapAsync(async function(req,res, next){//Función para act
     const updateUser = {
         name: userData.name,
         surname: userData.surname,
-        birthday: userData.birthday,
         phone: userData.phone,
         email: userData.email,
-        password: userData.password,
         img: userData.img || null,
         modifiedDate: fecha.getFecha()
     }

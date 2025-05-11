@@ -15,8 +15,7 @@ const userSchema = new mongoose.Schema({
     },
     phone:{
         type:Number,
-        required:true,
-        unique:true
+        required:true
     },
     email:{
         type:String,
@@ -57,7 +56,7 @@ user.createUser = async(userData, result) => {
     const newUser = new user(userData)
     await newUser.save()
     .then((data) => {
-        result(null, datos)
+        result(null, data)
     })
     .catch((err) => {
         result(err, null)

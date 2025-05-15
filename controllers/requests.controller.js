@@ -59,7 +59,9 @@ exports.editRequestUser = wrapAsync(async (req, res, next) => {
 
 //delete by id
 exports.deleteRequest = wrapAsync(async (req, res, next) => {
+    console.log("hola")
     const { id } = req.params;
+    console.log("el id es: " + id)
     await requestModel.deleteRequestById(id, function (err, datosEliminados) {
         if (err) {
             next(new AppError(err, 400))

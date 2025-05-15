@@ -40,21 +40,22 @@ app.use((req,res,next) => { // Middleware para definir variables globales accesi
 const whiteList = ["http://localhost:5173", "http://127.0.0.1:5173"]
 
 const corsOptions = {
-    origin: (origin, callback) => {
-        console.log("Origin:", origin);
-        if (whiteList.includes(origin) || !origin) {
-            callback(null, true);
-        } else {
-            callback(new AppError("No estás autorizado por CORS", 403), false);
+    origin:(origin, callback) => {
+        console.log(origin)
+        if(whiteList.includes(origin) || !origin){
+            callback(null, true)
+        }else{
+            callback(new AppError("No estás autorizado", 403), false)
         }
     },
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS", // Permitir los métodos que usas
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // Permitir los encabezados que envías
-    credentials: true, // Permitir el intercambio de cookies y encabezados de autorización
-    exposedHeaders: [], // Opcional: Cabeceras que el navegador puede exponer al CORS
-    maxAge: 86400, // Opcional: Tiempo en segundos que el navegador puede cachear la respuesta preflight (24 horas)
-    optionsSuccessStatus: 204, // Algunos navegadores requieren esta respuesta para las preflight requests
-};
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // Configura Access-Control-Allow-Methods
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], // Configura Access-Control-Allow-Headers
+    credentials: true, // Configura Access-Control-Allow-Credentials
+    // Opciones adicionales (menos comunes pero útiles)
+    exposedHeaders: ['Content-Length', 'Date'], // Configura Access-Control-Expose-Headers
+    maxAge: 86400, // Configura Access-Control-Max-Age (en segundos)
+    optionsSuccessStatus: 204
+}
 
 
 

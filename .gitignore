@@ -6,3 +6,5 @@ access.log
 error.log
 /tmp
 tmp/
+package-lock.json
+package.json

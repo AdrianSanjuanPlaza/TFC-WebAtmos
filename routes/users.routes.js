@@ -10,6 +10,7 @@ router.post("/logout", jwtMW.authenticate, usersController.logoutCSR)//
 router.post("/", usersController.createUser)//
 router.post("/login",usersController.login)//
 router.patch("/:id",jwtMW.authenticate, requireUser,usersController.updateUser)//
+router.patch("/toogle/:id", jwtMW.authenticate, requireAdmin, usersController.toogleState)
 router.delete("/:id",jwtMW.authenticate,requireAdmin,usersController.deleteUserById)//
 
 module.exports = router

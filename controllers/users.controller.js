@@ -175,3 +175,20 @@ exports.login = wrapAsync(async (req, res, next) => {
         return next(new AppError(error.message || "Error en la autenticación", 500)); // Si ocurre cualquier error en el bloque try
     }
 });
+
+exports.toogleState = wrapAsync( async (req, res, next) => {
+    const {id} = req.params
+    const userData = req.body
+    const updateUser = {
+        isActive: userData.isActive,
+        modifiedDate: fecha.getFecha()
+    }
+    
+    await userModel.updateUserById(id,updateUser,function(err,datosUsuarioActualizado){//Llama al método del modelo para actualizar el usuario
+        if(err){//Si hay error
+            next(new AppError(err, 400))
+        }else{//Si no hay error
+            res.status(200).json(datosUsuarioActualizado)
+        }
+    })
+})

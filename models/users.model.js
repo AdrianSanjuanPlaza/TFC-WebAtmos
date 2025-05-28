@@ -113,4 +113,17 @@ user.findByUsername = async(filter, result) => {
     }
 }
 
+user.findUserByEmail = async(email, result) => {
+    try {
+        const datos = await user.findOne({ email: email });
+        if (datos) {
+            result(null, datos);
+        } else {
+            result({ "error": "No se encontró ningún usuario con ese email" }, null);
+        }
+    } catch (err) {
+        result(err, null);
+    }
+}
+
 module.exports = user

@@ -12,5 +12,7 @@ router.post("/login",usersController.login)//
 router.patch("/:id",jwtMW.authenticate, requireUser,usersController.updateUser)//
 router.patch("/toogle/:id", jwtMW.authenticate, requireAdmin, usersController.toogleState)
 router.delete("/:id",jwtMW.authenticate,requireAdmin,usersController.deleteUserById)//
+router.post("/validateemail", usersController.findUserEmail)
+router.patch("/changepassword/:id", usersController.updateUserPassword)
 
 module.exports = router

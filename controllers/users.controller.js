@@ -192,3 +192,35 @@ exports.toogleState = wrapAsync( async (req, res, next) => {
         }
     })
 })
+
+exports.findUserEmail = wrapAsync( async (req, res, next) => {
+    const {email} = req.body
+    
+    await userModel.findUserByEmail(email, function(err, datosUsuario){
+        if(err){
+            next(new AppError(err, 404))
+        }else{
+            console.log("http://localhost:5173/changepassword/" + datosUsuario._id)
+            res.status(200).json(datosUsuario)
+        }
+    })
+})
+
+exports.updateUserPassword = wrapAsync( async (req, res, next) => {
+    const {id} = req.params
+    console.log(id)
+    const {newPassword} = req.body
+    console.log(newPassword)
+    const updateUser = {
+        password: await bcrypt.hashPassword(newPassword),
+        modifiedDate: fecha.getFecha()
+    }
+
+    await userModel.updateUserById(id, updateUser, function(err, datosUsuario){
+        if(err){
+            next(new AppError(err, 400))
+        }else{
+            res.status(200).json(datosUsuario)
+        }
+    })
+})

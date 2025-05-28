@@ -48,13 +48,7 @@ const corsOptions = {
             callback(new AppError("No estás autorizado", 403), false)
         }
     },
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // Configura Access-Control-Allow-Methods
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], // Configura Access-Control-Allow-Headers
-    credentials: true, // Configura Access-Control-Allow-Credentials
-    // Opciones adicionales (menos comunes pero útiles)
-    exposedHeaders: ['Content-Length', 'Date'], // Configura Access-Control-Expose-Headers
-    maxAge: 86400, // Configura Access-Control-Max-Age (en segundos)
-    optionsSuccessStatus: 204
+    credentials: true
 }
 
 
